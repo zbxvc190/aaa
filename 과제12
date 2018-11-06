@@ -1,0 +1,123 @@
+import requests
+r = requests.get('https://www.vox.com/2018/9/25/17901082/trump-un-2018-speech-full-text')
+r.encoding = 'utf8'
+data = str(r.text)
+data = data.replace('.', ' ')
+data = data.replace(',', ' ')
+data = data.replace("</a>", " ")
+data = data.replace("</p>", " ")
+data = data.replace('<', ' ')
+data = data.replace('>', ' ')
+data = data.replace('\n', ' ')
+data = data.replace('"', ' ')
+data = data.replace(':', ' ')
+data = data.replace('“',' ')
+data = data.replace('”', ' ')
+data = data.replace('(', ' ')
+data = data.replace(')', ' ')
+data = data.replace('/', ' ')
+data = data.replace('’', ' ')
+data = data.replace('=', ' ')
+data = data.replace('-', ' ')
+data = data.replace('—', ' ')
+
+begin=data.find("President Donald Trump  s second address")
+end=data.find('Thank you   Applause')
+
+a=data[begin:begin+3001]
+b=data[begin+3001:begin+6007]
+c=data[begin+6007:begin+9000]
+d=data[begin+9000:begin+12001]
+e=data[begin+12001:begin+14997]
+f=data[begin+14997:begin+17999]
+g=data[begin+17999:begin+21004]
+h=data[begin+21004:end+20]
+
+a = a.split()
+b = b.split()
+c = c.split()
+d = d.split()
+e = e.split()
+f = f.split()
+g = g.split()
+h = h.split()
+mydict = {}
+
+for w in a:
+    if w in mydict:
+        mydict[w] += 1
+    else:
+        mydict[w] = 1
+
+
+for w in b:
+    if w in mydict:
+        mydict[w] += 1
+    else:
+        mydict[w] = 1
+
+
+
+for w in c:
+    if w in mydict:
+        mydict[w] += 1
+    else:
+        mydict[w] = 1
+
+
+
+for w in d:
+    if w in mydict:
+        mydict[w] += 1
+    else:
+        mydict[w] = 1
+
+
+
+for w in a:
+    if w in mydict:
+        mydict[w] += 1
+    else:
+        mydict[w] = 1
+
+
+for w in e:
+    if w in mydict:
+        mydict[w] += 1
+    else:
+        mydict[w] = 1
+
+
+
+for w in f:
+    if w in mydict:
+        mydict[w] += 1
+    else:
+        mydict[w] = 1
+
+
+for w in g:
+    if w in mydict:
+        mydict[w] += 1
+    else:
+        mydict[w] = 1
+
+
+
+for w in h:
+    if w in mydict:
+        mydict[w] += 1
+    else:
+        mydict[w] = 1
+
+mylist=[]
+print('결과:')
+for k in sorted(mydict, key=mydict.__getitem__, reverse=True):
+    mylist.append('%s:%s'%(k, mydict[k]))
+
+print(mylist[:20], end=" ")
+    
+
+
+
+
