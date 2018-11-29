@@ -1,0 +1,74 @@
+#데이터 입력(화일)
+f = open('옷차림.txt', 'r')
+lines = f.readlines()
+for line in lines:
+    data0=line.split()
+f.close
+
+#데이터 입력(인터넷)
+import requests
+url = 'http://www.kma.go.kr/weather/forecast/mid-term-rss3.jsp?stnId=109'
+r = requests.get(url)
+r.encoding = 'utf8'
+data = str(r.text)
+begin=data.find("<city>서울")
+end=data.find('<city>인천</city>')
+data = data[begin+len("<city>서울"):end]
+
+
+#데이터 전처리(화일)
+mydict={}
+i=0
+t=1
+for a in range(int(len(data0)/2)):
+    mydict[data0[i]] = data0[t]
+    i += 2
+    t += 2
+print('mydict=',mydict)
+구간=mydict.keys()
+
+
+#데이터 전처리(인터넷)
+data = data.replace("</tmEf>", "")
+data = data.replace("</wf>", "")
+data = data.replace("</tmn>", "")
+data = data.replace("</tmx>", "")
+data = data.replace("</reliability>", "")
+data = data.replace('/', '')
+data = data.replace('<city>', ' ')
+data = data.replace("<data>", " ")
+data = data.replace("<mode>", " ")
+data = data.replace("A02", " ")
+data = data.replace("A01", " ")
+data = data.replace("<tmEf>", "날짜 ")
+data = data.replace("<wf>", "날씨 ")
+data = data.replace("<tmn>", ", 최저기온 ")
+data = data.replace("<tmx>", ", 최고기온 ")
+data = data.replace("<reliability>", ", 정확성: ")
+data = data.replace("\r", " ")
+data = data.replace("\t", "")
+data = data.replace("\n", "")
+data = data.replace("00:00", ",")
+
+mylist=[]
+for i in range(data.count('날짜')):
+    mylist.append(data[data.find('날짜'): data.find('정확성')+7])
+    data = data[data.find('정확성')+8:]
+
+a=mylist[0].split(',')
+b=mylist[2].split(',')
+c=mylist[4].split(',')
+d=mylist[6].split(',')
+e=mylist[8].split(',')
+f=mylist[10].split(',')
+g=mylist[11].split(',')
+print('a=',a)
+print('b=',b)
+print('c=',c)
+print('d=',d)
+print('e=',e)
+print('f=',f)
+print('g=',g)
+
+
+
